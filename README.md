@@ -2,7 +2,7 @@
 
 > A grunt task you shouldn't use.
 
-This grunt task is used to intentionally corrupt and mangle files. Use with caution, or malice.
+This grunt task is used to intentionally corrupt and mangle files. Use with caution.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.2`
@@ -83,12 +83,23 @@ In this example, we slightly corrupt every jpg files to get glitched images.
 grunt.initConfig({
   glitch: {
     options: {
-      probability : 0.00001,
-      deviation : 1
+      enabled : true
     },
-    files: {
-      'dest/default_options': ['src/**/*.jpg'],
-    },
-  },
+    my_targets : {
+      src: ['**/*.jpg'],
+      deviation : 2,
+      probability : 0.0001,
+    }
+  }
 });
 ```
+
+## Potential use cases
+
+* Glitch a set of image files without any actual code except for a friendly grunt task.
+* Train your debug muscles.
+* Celebrating april's fool day at the expense of a grunt user.
+
+## License
+
+MIT
