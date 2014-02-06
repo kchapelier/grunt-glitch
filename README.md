@@ -40,10 +40,16 @@ grunt.initConfig({
 ### Options
 
 #### options.enabled
-Type: `String`
+Type: `Boolean`
 Default value: false
 
 Must be explicitly set to true to activate the task. Make sure you fully understand what this grunt plugin does before testing it.
+
+#### options.force
+Type: `Boolean`
+Default value: false
+
+Set to true to ignore errors.
 
 #### options.probability
 Type: `String`
@@ -83,7 +89,8 @@ In this example, we slightly corrupt every jpg files to get glitched images.
 grunt.initConfig({
   glitch: {
     options: {
-      enabled : true
+      enabled : true,
+      force : true
     },
     my_targets : {
       src: ['**/*.jpg'],

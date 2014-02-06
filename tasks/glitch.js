@@ -11,7 +11,8 @@ module.exports = function(grunt) {
       probability: 0.0001,
       whiteList: [],
       blackList: [],
-      deviationFunction: null
+      deviationFunction: null,
+      force : false
     });
 
     if(!options.enabled) {
@@ -20,16 +21,27 @@ module.exports = function(grunt) {
     }
 
     var done = this.async();
+    var count = 0;
+    var multiDone = function() {
+      count++;
+      if(count === this.filesSrc.length) {
+        done();
+      }
+    }.bind(this);
 
     this.filesSrc.forEach(function(filepath) {
       var rstream = fs.createReadStream(filepath);
       rstream.on('end', function() {
         fs.writeFile(filepath, mstream.toBuffer(), function() {
-          done();
+          multiDone();
         });
       });
       rstream.on('error', function() {
-        done(false);
+        if(options.force) {
+          multiDone();
+        } else {
+          done(false);
+        }
       });
       var mstream = new MemoryStream(null, { readable : false });
       var gstream = new GlitchedStream(options);
